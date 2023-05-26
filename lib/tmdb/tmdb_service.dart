@@ -6,14 +6,13 @@ import 'package:cinemy/tmdb/model/trend.dart';
 import 'package:http/http.dart';
 
 class TMDBService {
-
-  static final _instance = TMDBService._();
-  static TMDBService get instance => _instance;
-
-  TMDBService._();
-
   final _endPoint = "https://api.themoviedb.org/3";
   final _apiKeyParam = "api_key=b8c5342655137883fd9b731dc6f4a920";
+  final _imageLink = "https://image.tmdb.org/t/p/w500";
+
+  String imageUrl(String path) {
+    return _imageLink + path;
+  }
 
   Future<Movie> getMovie(int id) async {
     Uri uri = Uri.parse("$_endPoint/movie/$id?$_apiKeyParam");
