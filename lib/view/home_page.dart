@@ -1,7 +1,8 @@
+import 'package:cinemy/bloc/movie_cubit.dart';
 import 'package:cinemy/locator.dart';
-import 'package:cinemy/tmdb/model/movie.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -11,78 +12,57 @@ class HomePageView extends StatefulWidget {
 }
 
 class HomePageViewState extends State<HomePageView> {
-  final TMDBService _tmdbService = getIt.get<TMDBService>();
-  Movie? _movie;
-  Widget _searchBar = const Text('Movies');
-  Icon _visibleIcon = const Icon(Icons.search);
+  HomePageViewState() {
+    var trendingMoviesCubit = getIt.get<TrendingMoviesCubit>();
+    trendingMoviesCubit.initialPage();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: _searchBar,
+        title: const Text('Movies'),
         actions: <Widget>[
           IconButton(
-            icon: _visibleIcon,
-            onPressed: () {
-              setState(() {
-                if (this._visibleIcon.icon == Icons.search) {
-                  this._visibleIcon = Icon(Icons.cancel);
-                  this._searchBar = TextField(
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (String text) async {
-                      int id = int.parse(text);
-                      Movie movie = await _tmdbService.getMovie(id);
-                      this._movie = movie;
-                    },
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  );
-                } else {
-                  setState(() {
-                    this._visibleIcon = Icon(Icons.search);
-                    this._searchBar = Text('Movies');
-                  });
-                }
-              });
-            },
+            icon: const Icon(Icons.search),
+            onPressed: () {},
           ),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.black26,
         ),
-        child: _movie != null
-            ? Center(
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(_movie!.title, style: const TextStyle(fontSize: 26)),
-                        const SizedBox(height: 8),
-                        Container(
-                          height: 200,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.red),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: Image.network(_tmdbService.imageUrl(_movie!.posterPath)),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(_movie!.overview),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            : const Center(child: Text("The movie not load yet")),
+        child: BlocBuilder<TrendingMoviesCubit, MoviesState>(
+            bloc: getIt.get<TrendingMoviesCubit>(),
+            builder: (_, state) {
+              return TrendingMoviesWidget(moviesState: state);
+            }),
       ),
+    );
+  }
+}
+
+class TrendingMoviesWidget extends StatelessWidget {
+  TrendingMoviesWidget({required this.moviesState, super.key});
+
+  final MoviesState moviesState;
+  final TMDBService _tmdbService = getIt.get<TMDBService>();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: moviesState.movies
+          .map((movie) => Card(
+                child: Column(
+                  children: [
+                    Text(movie.title),
+                    Text(movie.releaseDate),
+                    Image.network(_tmdbService.imageUrl(movie.posterPath))
+                  ],
+                ),
+              ))
+          .toList(),
     );
   }
 }
