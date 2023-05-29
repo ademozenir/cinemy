@@ -8,6 +8,11 @@ abstract class Page {
   final int totalPages;
   final int totalResults;
 
+  Page.empty()
+      : page = 0,
+        totalPages = 0,
+        totalResults = 0;
+
   Page.fromJson(Map<String, dynamic> map)
       : page = map["page"] as int,
         totalPages = map["total_pages"] as int,
@@ -15,18 +20,18 @@ abstract class Page {
 }
 
 class PersonSearch extends Page {
-  final List<Person> results;
+  final List<Person> people;
 
   PersonSearch.fromJson(Map<String, dynamic> map)
-      : results = (map["results"] as List).map((e) => Person.fromJson(e)).toList(),
+      : people = (map["results"] as List).map((e) => Person.fromJson(e)).toList(),
         super.fromJson(map);
 }
 
 class MovieSearch extends Page {
-  final List<Movie> results;
+  final List<Movie> movies;
 
   MovieSearch.fromJson(Map<String, dynamic> map)
-      : results = (map["results"] as List).map((e) => Movie.fromJson(e)).toList(),
+      : movies = (map["results"] as List).map((e) => Movie.fromJson(e)).toList(),
         super.fromJson(map);
 }
 

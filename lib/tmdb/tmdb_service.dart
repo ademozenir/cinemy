@@ -69,8 +69,8 @@ class TMDBService {
     throw Exception("Could not search multi");
   }
 
-  Future<TrendingMovies> getTrendingMovies() async {
-    Uri uri = Uri.parse("$_endPoint/trending/movie/week?$_apiKeyParam");
+  Future<TrendingMovies> getTrendingMovies(int page) async {
+    Uri uri = Uri.parse("$_endPoint/trending/movie/week?$_apiKeyParam&page=$page");
     Response response = await get(uri);
 
     if (response.statusCode == 200) {

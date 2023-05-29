@@ -3,27 +3,31 @@ import 'person.dart';
 import 'search.dart';
 
 class TrendingMovies extends Page {
-  final List<Movie> results;
+  final List<Movie> movies;
+
+  TrendingMovies.empty()
+      : movies = [],
+        super.empty();
 
   TrendingMovies.fromJson(Map<String, dynamic> map)
-      : results = (map["results"] as List? ?? []).map((e) => Movie.fromJson(e)).toList(),
+      : movies = (map["results"] as List? ?? []).map((e) => Movie.fromJson(e)).toList(),
         super.fromJson(map);
 
   @override
   String toString() {
-    return 'TrendingMovies{results: $results}';
+    return 'TrendingMovies{results: $movies}';
   }
 }
 
 class TrendingPeople extends Page {
-  final List<Person> results;
+  final List<Person> people;
 
   TrendingPeople.fromJson(Map<String, dynamic> map)
-      : results = (map["results"] as List? ?? []).map((e) => Person.fromJson(e)).toList(),
+      : people = (map["results"] as List? ?? []).map((e) => Person.fromJson(e)).toList(),
         super.fromJson(map);
 
   @override
   String toString() {
-    return 'TrendingPeople{results: $results}';
+    return 'TrendingPeople{results: $people}';
   }
 }
