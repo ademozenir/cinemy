@@ -1,7 +1,7 @@
 import 'package:cinemy/locator.dart';
+import 'package:cinemy/view/main_view.dart';
 import 'package:flutter/material.dart';
 
-import 'view/home_page.dart';
 
 void main() {
   setup();
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePageView(),
+      home: const MainView(),
     );
   }
 }

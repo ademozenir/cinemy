@@ -8,6 +8,8 @@ abstract class Page {
   final int totalPages;
   final int totalResults;
 
+  Page(this.page, this.totalPages, this.totalResults);
+
   Page.empty()
       : page = 0,
         totalPages = 0,

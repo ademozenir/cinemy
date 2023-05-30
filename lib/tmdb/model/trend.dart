@@ -5,6 +5,8 @@ import 'search.dart';
 class TrendingMovies extends Page {
   final List<Movie> movies;
 
+  TrendingMovies(super.page, super.totalPages, super.totalResults, this.movies);
+
   TrendingMovies.empty()
       : movies = [],
         super.empty();

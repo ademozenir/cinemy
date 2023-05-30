@@ -8,18 +8,17 @@ class TrendingMoviesCubit extends Cubit<TrendingMovies> {
 
   final TMDBService _tmdbService = getIt.get<TMDBService>();
 
-  Future<void> initialPage() async {
-    var trendingMovies = await _tmdbService.getTrendingMovies(1);
-    emit(trendingMovies);
-  }
-
   Future<void> nextPage() async {
     var trendingMovies = await _tmdbService.getTrendingMovies(state.page + 1);
-    emit(trendingMovies);
-  }
+    state.movies.addAll(trendingMovies.movies);
 
-  Future<void> previousPage() async {
-    var trendingMovies = await _tmdbService.getTrendingMovies(state.page - 1);
-    emit(trendingMovies);
+    emit(
+      TrendingMovies(
+        trendingMovies.page,
+        trendingMovies.totalPages,
+        trendingMovies.totalResults,
+        state.movies,
+      ),
+    );
   }
 }

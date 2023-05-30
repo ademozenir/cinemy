@@ -5,17 +5,17 @@ import 'package:cinemy/tmdb/tmdb_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
+class TrendingMoviesView extends StatefulWidget {
+  const TrendingMoviesView({super.key});
 
   @override
-  HomePageViewState createState() => HomePageViewState();
+  TrendingMoviesViewState createState() => TrendingMoviesViewState();
 }
 
-class HomePageViewState extends State<HomePageView> {
-  HomePageViewState() {
+class TrendingMoviesViewState extends State<TrendingMoviesView> {
+  TrendingMoviesViewState() {
     var trendingMoviesCubit = getIt.get<TrendingMoviesCubit>();
-    trendingMoviesCubit.initialPage();
+    trendingMoviesCubit.nextPage();
   }
 
   @override
@@ -46,18 +46,10 @@ class HomePageViewState extends State<HomePageView> {
 
 class TrendingMoviesWidget extends StatelessWidget {
   TrendingMoviesWidget({required this.moviesState, super.key}) {
-
     _scrollController.addListener(() {
-      if (_scrollController.position.atEdge) {
-          var trendingMoviesCubit = getIt.get<TrendingMoviesCubit>();
-        // Reach the top of the list
-        if (_scrollController.position.pixels == 0) {
-          trendingMoviesCubit.previousPage();
-        }
-        // Reach the bottom of the list
-        else {
-          trendingMoviesCubit.nextPage();
-        }
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        var trendingMoviesCubit = getIt.get<TrendingMoviesCubit>();
+        trendingMoviesCubit.nextPage();
       }
     });
   }
@@ -65,6 +57,7 @@ class TrendingMoviesWidget extends StatelessWidget {
   final TrendingMovies moviesState;
   final TMDBService _tmdbService = getIt.get<TMDBService>();
   final ScrollController _scrollController = ScrollController();
+
 
   @override
   Widget build(BuildContext context) {
