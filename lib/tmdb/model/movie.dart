@@ -1,4 +1,3 @@
-
 class Movie {
   Movie({
     required this.id,
@@ -7,6 +6,7 @@ class Movie {
     required this.overview,
     required this.genres,
     required this.popularity,
+    required this.voteAverage,
     required this.releaseDate,
     required this.runtime,
     required this.posterPath,
@@ -21,12 +21,28 @@ class Movie {
   final String overview;
   final List<Genre> genres;
   final double popularity;
+  final double voteAverage;
   final String releaseDate;
   final int runtime;
   final String posterPath;
   final String backdropPath;
   final int budget;
   final int revenue;
+
+  Movie.empty()
+      : id = 0,
+        title = "",
+        tagline = "",
+        overview = "",
+        genres = [],
+        popularity = 0.0,
+        voteAverage = 0.0,
+        releaseDate = "",
+        runtime = 0,
+        posterPath = "",
+        backdropPath = "",
+        budget = 0,
+        revenue = 0;
 
   factory Movie.fromJson(Map<String, dynamic> map) {
     return Movie(
@@ -36,6 +52,7 @@ class Movie {
       overview: map["overview"] ?? "",
       genres: (map["genres"] as List? ?? []).map((e) => Genre.fromJson(e)).toList(),
       popularity: map["popularity"] ?? 0.0,
+      voteAverage: map["vote_average"] ?? 0.0,
       releaseDate: map["release_date"] ?? "",
       runtime: map["runtime"] ?? 0,
       posterPath: map["poster_path"] ?? "",
@@ -51,7 +68,6 @@ class Movie {
         ' popularity: $popularity, releaseDate: $releaseDate, runtime: $runtime, posterPath: $posterPath, '
         'backdropPath: $backdropPath, budget: $budget, revenue: $revenue}';
   }
-
 }
 
 class Genre {

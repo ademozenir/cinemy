@@ -80,8 +80,8 @@ class TMDBService {
     throw Exception("Could not get trending movies");
   }
 
-  Future<TrendingPeople> getTrendingPeople() async {
-    Uri uri = Uri.parse("$_endPoint/trending/person/week?$_apiKeyParam");
+  Future<TrendingPeople> getTrendingPeople(int page) async {
+    Uri uri = Uri.parse("$_endPoint/trending/person/week?$_apiKeyParam&page=$page");
     Response response = await get(uri);
 
     if (response.statusCode == 200) {
@@ -89,5 +89,16 @@ class TMDBService {
       return TrendingPeople.fromJson(jsonResponse);
     }
     throw Exception("Could not get trending people");
+  }
+
+  Future<TrendingTvShows> getTrendingTvShows(int page) async {
+    Uri uri = Uri.parse("$_endPoint/trending/tv/week?$_apiKeyParam&page=$page");
+    Response response = await get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      return TrendingTvShows.fromJson(jsonResponse);
+    }
+    throw Exception("Could not get trending tv shows");
   }
 }

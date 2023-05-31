@@ -1,9 +1,11 @@
-import 'package:cinemy/bloc/movie_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/trend.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
+import 'package:cinemy/view/movie_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/trending_cubit.dart';
 
 class TrendingMoviesView extends StatefulWidget {
   const TrendingMoviesView({super.key});
@@ -22,7 +24,7 @@ class TrendingMoviesViewState extends State<TrendingMoviesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movies'),
+        title: const Text('Trending Movies'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -58,24 +60,28 @@ class TrendingMoviesWidget extends StatelessWidget {
   final TMDBService _tmdbService = getIt.get<TMDBService>();
   final ScrollController _scrollController = ScrollController();
 
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       controller: _scrollController,
       children: moviesState.movies
           .map((movie) => Card(
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(movie.title),
-                      subtitle: Text(movie.releaseDate),
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    subtitle: Text(movie.releaseDate),
+                    title: Text(movie.title),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MovieDetailView(movie.id)),
                     ),
-                    Image.network(_tmdbService.imageUrl(movie.backdropPath))
-                  ],
-                ),
-              ))
+                    child: Image.network(_tmdbService.imageUrl(movie.backdropPath)),
+                  ),
+                ],
+              )))
           .toList(),
     );
   }
