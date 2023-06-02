@@ -2,7 +2,7 @@ import 'package:cinemy/bloc/movie_detail_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/movie.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
-import 'package:cinemy/view/movie_player.dart';
+import 'package:cinemy/view/trailer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -88,59 +88,60 @@ class MovieDetailView extends StatelessWidget {
                       ),
                       const SizedBox(height: 25),
                       Positioned(
-                          bottom: 10,
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.all(20),
-                                      backgroundColor: Colors.pink[900],
-                                      fixedSize: Size(MediaQuery.of(context).size.width * 0.400, 60),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                                  onPressed: () {},
-                                  child: RichText(
-                                    text: TextSpan(
-                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
-                                        children: [
-                                          TextSpan(
-                                            text: "Add to",
-                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
-                                          ),
-                                          const TextSpan(
-                                            text: " Watchlist",
-                                          )
-                                        ]),
-                                  ),
+                        bottom: 10,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.all(20),
+                                    backgroundColor: Colors.pink[900],
+                                    fixedSize: Size(MediaQuery.of(context).size.width * 0.400, 60),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                                onPressed: () {},
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                                      children: [
+                                        TextSpan(
+                                          text: "Add to",
+                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                                        ),
+                                        const TextSpan(
+                                          text: " Watchlist",
+                                        )
+                                      ]),
                                 ),
-                                const SizedBox(width: 10),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.all(20),
-                                      backgroundColor: Colors.white,
-                                      fixedSize: Size(MediaQuery.of(context).size.width * 0.400, 60),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => MoviePlayer(movie: movie)));
-                                  },
-                                  child: RichText(
-                                    text: TextSpan(
-                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
-                                        children: [
-                                          TextSpan(
-                                            text: "Start Watching",
-                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
-                                          ),
-                                        ]),
-                                  ),
+                              ),
+                              const SizedBox(width: 10),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.all(20),
+                                    backgroundColor: Colors.white,
+                                    fixedSize: Size(MediaQuery.of(context).size.width * 0.400, 60),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context, MaterialPageRoute(builder: (context) => TrailerView(movie.id)));
+                                },
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+                                      children: [
+                                        TextSpan(
+                                          text: "Start Watching",
+                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+                                        ),
+                                      ]),
                                 ),
-                              ],
-                            ),
-                          ))
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:cinemy/bloc/movie_detail_cubit.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'bloc/trending_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -8,6 +9,10 @@ final GetIt getIt = GetIt.instance;
 void setup() {
   getIt.registerLazySingleton<TMDBService>(
     () => TMDBService(),
+  );
+
+  getIt.registerLazySingleton<YoutubeExplode>(
+    () => YoutubeExplode(),
   );
 
   getIt.registerLazySingleton<TrendingMoviesCubit>(
@@ -25,4 +30,9 @@ void setup() {
   getIt.registerLazySingleton<MovieDetailCubit>(
     () => MovieDetailCubit(),
   );
+
+  getIt.registerLazySingleton<MovieVideoCubit>(
+    () => MovieVideoCubit(),
+  );
+
 }

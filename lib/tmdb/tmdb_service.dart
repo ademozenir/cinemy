@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cinemy/tmdb/model/movie.dart';
+import 'package:cinemy/tmdb/model/movie_video.dart';
 import 'package:cinemy/tmdb/model/person.dart';
 import 'package:cinemy/tmdb/model/search.dart';
 import 'package:cinemy/tmdb/model/trend.dart';
@@ -23,6 +24,17 @@ class TMDBService {
       return Movie.fromJson(jsonResponse);
     }
     throw Exception("Could not get movie");
+  }
+
+  Future<List<Video>> getMovieVideos(int id) async {
+    Uri uri = Uri.parse("$_endPoint/movie/$id/videos?$_apiKeyParam");
+    Response response = await get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      return (jsonResponse["results"] as List? ?? []).map((e) => Video.fromJson(e)).toList();
+    }
+    throw Exception("Could not get movie videos");
   }
 
   Future<Person> getPerson(int id) async {
