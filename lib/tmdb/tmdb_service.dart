@@ -70,8 +70,8 @@ class TMDBService {
     throw Exception("Could not search person");
   }
 
-  Future<MultiSearch> searchMulti(String name) async {
-    Uri uri = Uri.parse("$_endPoint/search/multi?$_apiKeyParam&query=$name");
+  Future<MultiSearch> searchMulti(String name, [int page = 1]) async {
+    Uri uri = Uri.parse("$_endPoint/search/multi?$_apiKeyParam&query=$name&page=$page");
     Response response = await get(uri);
 
     if (response.statusCode == 200) {

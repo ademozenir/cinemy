@@ -3,6 +3,8 @@ class Multi {
   Multi({
     required this.id,
     required this.title,
+    required this.name,
+    required this.mediaType,
     required this.backdropPath,
     required this.overview,
     required this.posterPath,
@@ -13,6 +15,8 @@ class Multi {
 
   final int id;
   final String title;
+  final String name;
+  final String mediaType;
   final String backdropPath;
   final String overview;
   final String posterPath;
@@ -24,6 +28,8 @@ class Multi {
     return Multi(
       id: map["id"] as int,
       title: map["title"] ?? "",
+      name: map["name"] ?? "",
+      mediaType: map["media_type"] ?? "",
       backdropPath: map["backdrop_path"] ?? "",
       overview: map["overview"] ?? "",
       posterPath: map["poster_path"] ?? "",
@@ -31,11 +37,5 @@ class Multi {
       popularity: map["popularity"] ?? 0.0,
       releaseDate: map["poster_path"] ?? "",
     );
-  }
-
-  @override
-  String toString() {
-    return 'Multi{id: $id, title: $title, backdropPath: $backdropPath, overview: $overview, '
-        'posterPath: $posterPath, movie: $movie, popularity: $popularity, releaseDate: $releaseDate}';
   }
 }

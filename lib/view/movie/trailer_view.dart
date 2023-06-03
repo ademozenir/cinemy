@@ -70,7 +70,10 @@ class _YoutubeVideoState extends State<YoutubeVideo> {
     var youtubeExplode = getIt.get<yt.YoutubeExplode>();
     youtubeExplode.videos.streamsClient.getManifest(widget._key).then((manifest) {
       _videoPlayerController = VideoPlayerController.network(manifest.muxed.bestQuality.url.toString());
-      _chewieController = ChewieController(videoPlayerController: _videoPlayerController);
+      _chewieController = ChewieController(
+        aspectRatio: 16 / 9,
+        videoPlayerController: _videoPlayerController,
+      );
       setState(() {});
     });
   }

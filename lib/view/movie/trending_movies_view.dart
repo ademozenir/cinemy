@@ -1,11 +1,11 @@
+import 'package:cinemy/bloc/trending_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/trend.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
-import 'package:cinemy/view/movie_detail_view.dart';
+import 'package:cinemy/view/movie/movie_detail_view.dart';
+import 'package:cinemy/view/search/search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/trending_cubit.dart';
 
 class TrendingMoviesView extends StatefulWidget {
   const TrendingMoviesView({super.key});
@@ -28,7 +28,9 @@ class TrendingMoviesViewState extends State<TrendingMoviesView> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchView()));
+            },
           ),
         ],
       ),
@@ -65,23 +67,25 @@ class TrendingMoviesWidget extends StatelessWidget {
     return ListView(
       controller: _scrollController,
       children: moviesState.movies
-          .map((movie) => Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  ListTile(
-                    subtitle: Text(movie.releaseDate),
-                    title: Text(movie.title),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MovieDetailView(movie.id)),
+          .map(
+            (movie) => Card(
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MovieDetailView(movie.id)),
+                ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      subtitle: Text(movie.releaseDate),
+                      title: Text(movie.title),
                     ),
-                    child: Image.network(_tmdbService.imageUrl(movie.backdropPath)),
-                  ),
-                ],
-              )))
+                    Image.network(_tmdbService.imageUrl(movie.backdropPath))
+                  ],
+                ),
+              ),
+            ),
+          )
           .toList(),
     );
   }

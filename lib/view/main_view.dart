@@ -1,7 +1,7 @@
 
-import 'package:cinemy/view/trending_tv_shows_view.dart';
-import 'package:cinemy/view/trending_movies_view.dart';
-import 'package:cinemy/view/trending_people_view.dart';
+import 'package:cinemy/view/movie/trending_movies_view.dart';
+import 'package:cinemy/view/tv_show/trending_tv_shows_view.dart';
+import 'package:cinemy/view/people/trending_people_view.dart';
 import 'package:flutter/material.dart';
 
 class MainView extends StatefulWidget {

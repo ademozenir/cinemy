@@ -40,6 +40,12 @@ class MovieSearch extends Page {
 class MultiSearch extends Page {
   final List<Multi> results;
 
+  MultiSearch(this.results, super.page, super.totalPages, super.totalResults);
+
+  MultiSearch.empty()
+      : results = [],
+        super.empty();
+
   MultiSearch.fromJson(Map<String, dynamic> map)
       : results = (map["results"] as List).map((e) => Multi.fromJson(e)).toList(),
         super.fromJson(map);
