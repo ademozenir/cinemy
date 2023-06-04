@@ -4,6 +4,7 @@ import 'package:cinemy/tmdb/model/movie_video.dart';
 import 'package:cinemy/tmdb/model/person.dart';
 import 'package:cinemy/tmdb/model/search.dart';
 import 'package:cinemy/tmdb/model/trend.dart';
+import 'package:cinemy/tmdb/model/tv_show.dart';
 import 'package:http/http.dart';
 
 class TMDBService {
@@ -26,17 +27,6 @@ class TMDBService {
     throw Exception("Could not get movie");
   }
 
-  Future<List<Video>> getMovieVideos(int id) async {
-    Uri uri = Uri.parse("$_endPoint/movie/$id/videos?$_apiKeyParam");
-    Response response = await get(uri);
-
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      return (jsonResponse["results"] as List? ?? []).map((e) => Video.fromJson(e)).toList();
-    }
-    throw Exception("Could not get movie videos");
-  }
-
   Future<Person> getPerson(int id) async {
     Uri uri = Uri.parse("$_endPoint/person/$id?$_apiKeyParam");
     Response response = await get(uri);
@@ -46,6 +36,17 @@ class TMDBService {
       return Person.fromJson(jsonResponse);
     }
     throw Exception("Could not get person");
+  }
+
+  Future<TvShow> getTvShow(int id) async {
+    Uri uri = Uri.parse("$_endPoint/tv/$id?$_apiKeyParam");
+    Response response = await get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      return TvShow.fromJson(jsonResponse);
+    }
+    throw Exception("Could not get tv show");
   }
 
   Future<MovieSearch> searchMovie(String title) async {
@@ -112,5 +113,27 @@ class TMDBService {
       return TrendingTvShows.fromJson(jsonResponse);
     }
     throw Exception("Could not get trending tv shows");
+  }
+
+  Future<List<Video>> getMovieVideos(int id) async {
+    Uri uri = Uri.parse("$_endPoint/movie/$id/videos?$_apiKeyParam");
+    Response response = await get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      return (jsonResponse["results"] as List? ?? []).map((e) => Video.fromJson(e)).toList();
+    }
+    throw Exception("Could not get movie videos");
+  }
+
+  Future<List<Video>> getTvShowVideos(int id) async {
+    Uri uri = Uri.parse("$_endPoint/tv/$id/videos?$_apiKeyParam");
+    Response response = await get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      return (jsonResponse["results"] as List? ?? []).map((e) => Video.fromJson(e)).toList();
+    }
+    throw Exception("Could not get tv show videos");
   }
 }

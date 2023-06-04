@@ -1,5 +1,6 @@
+
 import 'package:chewie/chewie.dart';
-import 'package:cinemy/bloc/movie_detail_cubit.dart';
+import 'package:cinemy/bloc/detail_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/movie_video.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
-class TrailerView extends StatelessWidget {
-  TrailerView(this.movieId, {Key? key}) : super(key: key) {
-    getIt.get<MovieVideoCubit>().getMovieVideos(movieId);
+class VideoView extends StatelessWidget {
+  VideoView(this.id, this.videoCubit, {Key? key}) : super(key: key) {
+    videoCubit.getVideos(id);
   }
 
-  final int movieId;
+  final int id;
+  final VideoCubit videoCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -21,25 +23,25 @@ class TrailerView extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Trailers"),
       ),
-      body: BlocBuilder<MovieVideoCubit, List<Video>>(
-        bloc: getIt.get<MovieVideoCubit>(),
+      body: BlocBuilder<VideoCubit, List<Video>>(
+        bloc: videoCubit,
         builder: (_, videos) {
           return ListView(
             children: videos
                 .map(
                   (video) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Card(
-                      key: Key(video.id),
-                      child: Column(children: [
-                        ListTile(
-                          title: Text(video.name),
-                        ),
-                        SizedBox(height: 250, child: YoutubeVideo(video.key)),
-                      ]),
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Card(
+                  key: Key(video.id),
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(video.name),
                     ),
-                  ),
-                )
+                    SizedBox(height: 250, child: YoutubeVideo(video.key)),
+                  ]),
+                ),
+              ),
+            )
                 .toList(),
           );
         },
@@ -49,7 +51,7 @@ class TrailerView extends StatelessWidget {
 }
 
 class YoutubeVideo extends StatefulWidget {
-  YoutubeVideo(this._key, {Key? key}) : super(key: key);
+  const YoutubeVideo(this._key, {Key? key}) : super(key: key);
 
   final String _key;
 
@@ -90,7 +92,7 @@ class _YoutubeVideoState extends State<YoutubeVideo> {
     return _chewieController == null
         ? const Text("video loading")
         : Chewie(
-            controller: _chewieController!,
-          );
+      controller: _chewieController!,
+    );
   }
 }

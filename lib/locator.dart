@@ -1,4 +1,4 @@
-import 'package:cinemy/bloc/movie_detail_cubit.dart';
+import 'package:cinemy/bloc/detail_cubit.dart';
 import 'package:cinemy/bloc/search_cubit.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
 import 'package:get_it/get_it.dart';
@@ -8,36 +8,25 @@ import 'bloc/trending_cubit.dart';
 final GetIt getIt = GetIt.instance;
 
 void setup() {
-  getIt.registerLazySingleton<TMDBService>(
-    () => TMDBService(),
-  );
+  getIt.registerLazySingleton<TMDBService>(() => TMDBService());
 
-  getIt.registerLazySingleton<YoutubeExplode>(
-    () => YoutubeExplode(),
-  );
+  getIt.registerLazySingleton<YoutubeExplode>(() => YoutubeExplode());
 
-  getIt.registerLazySingleton<TrendingMoviesCubit>(
-    () => TrendingMoviesCubit(),
-  );
+  getIt.registerLazySingleton<TrendingMoviesCubit>(() => TrendingMoviesCubit());
 
-  getIt.registerLazySingleton<TrendingPeopleCubit>(
-    () => TrendingPeopleCubit(),
-  );
+  getIt.registerLazySingleton<TrendingPeopleCubit>(() => TrendingPeopleCubit());
 
-  getIt.registerLazySingleton<TrendingTvShowsCubit>(
-    () => TrendingTvShowsCubit(),
-  );
+  getIt.registerLazySingleton<TrendingTvShowsCubit>(() => TrendingTvShowsCubit());
 
-  getIt.registerLazySingleton<MovieDetailCubit>(
-    () => MovieDetailCubit(),
-  );
+  getIt.registerLazySingleton<MovieDetailCubit>(() => MovieDetailCubit());
 
-  getIt.registerLazySingleton<MovieVideoCubit>(
-    () => MovieVideoCubit(),
-  );
+  getIt.registerLazySingleton<PersonDetailCubit>(() => PersonDetailCubit());
 
-  getIt.registerLazySingleton<SearchMultiCubit>(
-    () => SearchMultiCubit(),
-  );
+  getIt.registerLazySingleton<TvShowDetailCubit>(() => TvShowDetailCubit());
 
+  getIt.registerLazySingleton<MovieVideoCubit>(() => MovieVideoCubit());
+
+  getIt.registerLazySingleton<TvShowVideoCubit>(() => TvShowVideoCubit());
+
+  getIt.registerLazySingleton<SearchMultiCubit>(() => SearchMultiCubit());
 }

@@ -1,4 +1,3 @@
-
 class Person {
   Person({
     required this.id,
@@ -23,6 +22,18 @@ class Person {
   final String knownForDepartment;
   final double popularity;
   final String profilePath;
+
+  Person.empty()
+      : id = 0,
+        name = "",
+        biography = "",
+        birthday = "",
+        placeOfBirth = "",
+        deathday = "",
+        gender = 0,
+        knownForDepartment = "",
+        popularity = 0.0,
+        profilePath = "";
 
   factory Person.fromJson(Map<String, dynamic> map) {
     return Person(

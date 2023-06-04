@@ -23,6 +23,18 @@ class TvShow {
   final String backdropPath;
   final int voteCount;
 
+  TvShow.empty()
+      : id = 0,
+        name = "",
+        mediaType = "",
+        overview = "",
+        popularity = 0.0,
+        firstAirDate = "",
+        voteAverage = 0.0,
+        posterPath = "",
+        backdropPath = "",
+        voteCount = 0;
+
   factory TvShow.fromJson(Map<String, dynamic> map) {
     return TvShow(
       id: map["id"] as int,

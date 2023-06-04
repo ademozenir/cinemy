@@ -3,7 +3,7 @@ import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/trend.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
 import 'package:cinemy/view/movie/movie_detail_view.dart';
-import 'package:cinemy/view/search/search_view.dart';
+import 'package:cinemy/view/widget/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,17 +23,7 @@ class TrendingMoviesViewState extends State<TrendingMoviesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trending Movies'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchView()));
-            },
-          ),
-        ],
-      ),
+      appBar: MainSearchBar("Trending Movies"),
       body: Container(
         decoration: const BoxDecoration(
           color: Colors.black26,

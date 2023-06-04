@@ -8,6 +8,7 @@ class Multi {
     required this.backdropPath,
     required this.overview,
     required this.posterPath,
+    required this.profilePath,
     required this.movie,
     required this.popularity,
     required this.releaseDate,
@@ -20,6 +21,7 @@ class Multi {
   final String backdropPath;
   final String overview;
   final String posterPath;
+  final String profilePath;
   final String movie;
   final double popularity;
   final String releaseDate;
@@ -33,6 +35,7 @@ class Multi {
       backdropPath: map["backdrop_path"] ?? "",
       overview: map["overview"] ?? "",
       posterPath: map["poster_path"] ?? "",
+      profilePath: map["profile_path"] ?? "",
       movie: map["movie"] ?? "",
       popularity: map["popularity"] ?? 0.0,
       releaseDate: map["poster_path"] ?? "",

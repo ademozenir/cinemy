@@ -2,8 +2,10 @@ import 'package:cinemy/bloc/trending_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/trend.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
+import 'package:cinemy/view/widget/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'person_detail_view.dart';
 
 class TrendingPeopleView extends StatefulWidget {
   const TrendingPeopleView({super.key});
@@ -21,15 +23,7 @@ class TrendingPeopleViewState extends State<TrendingPeopleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trending People'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: MainSearchBar('Trending People'),
       body: Container(
         decoration: const BoxDecoration(
           color: Colors.black26,
@@ -58,24 +52,28 @@ class TrendingPeopleWidget extends StatelessWidget {
   final TMDBService _tmdbService = getIt.get<TMDBService>();
   final ScrollController _scrollController = ScrollController();
 
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       controller: _scrollController,
       children: peopleState.people
           .map((people) => Card(
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          children: [
-            ListTile(
-              title: Text(people.name),
-              subtitle: Text(people.knownForDepartment),
-            ),
-            Image.network(_tmdbService.imageUrl(people.profilePath))
-          ],
-        ),
-      ))
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PersonDetailView(people.id)),
+                  ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(people.name),
+                        subtitle: Text(people.knownForDepartment),
+                      ),
+                      Image.network(_tmdbService.imageUrl(people.profilePath))
+                    ],
+                  ),
+                ),
+              ))
           .toList(),
     );
   }

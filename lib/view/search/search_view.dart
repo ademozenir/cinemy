@@ -1,7 +1,10 @@
 import 'package:cinemy/bloc/search_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/search.dart';
+import 'package:cinemy/tmdb/tmdb_service.dart';
 import 'package:cinemy/view/movie/movie_detail_view.dart';
+import 'package:cinemy/view/person/person_detail_view.dart';
+import 'package:cinemy/view/tv_show/tv_show_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +20,7 @@ class SearchView extends StatelessWidget {
   final _textController = TextEditingController();
   final _searchMultiCubit = getIt.get<SearchMultiCubit>();
   final _scrollController = ScrollController();
+  final TMDBService _tmdbService = getIt.get<TMDBService>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,25 +29,73 @@ class SearchView extends StatelessWidget {
         actions: [
           IconButton(icon: const Icon(Icons.close), onPressed: () => _textController.clear()),
         ],
-        title: TextField(
-          controller: _textController,
-          onChanged: _searchMultiCubit.searh,
+        title: SizedBox(
+          width: 310,
+          height: 60,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0, bottom: 10),
+            child: TextField(
+              controller: _textController,
+              onChanged: _searchMultiCubit.searh,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
       body: BlocBuilder<SearchMultiCubit, MultiSearch>(
         bloc: _searchMultiCubit,
-        builder: (_, multiSearch) => ListView(
+        builder: (_, multiSearch) => GridView(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          physics: const BouncingScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio: 0.9,
+          ),
           controller: _scrollController,
           children: multiSearch.results
               .map((multi) => Card(
+                    color: Colors.blueGrey[900],
                     key: Key(multi.id.toString()),
                     child: GestureDetector(
                       onTap: () {
-                        if (multi.mediaType == "movie") {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MovieDetailView(multi.id)));
-                        }
+                        Widget view = switch (multi.mediaType) {
+                          "movie" => MovieDetailView(multi.id),
+                          "person" => PersonDetailView(multi.id),
+                          _ => TvShowDetailView(multi.id)
+                        };
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => view));
                       },
-                      child: ListTile(title: Text(multi.name.isNotEmpty ? multi.name : multi.title)),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Text(
+                              maxLines: 2,
+                              multi.name.isNotEmpty ? multi.name : multi.title,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.amber,
+                              ),
+                            ),
+                          ),
+                          AspectRatio(
+                              aspectRatio: 1,
+                              child: Column(
+                                children: [
+                                  Image.network(
+                                      alignment: AlignmentDirectional.bottomStart,
+                                      _tmdbService.imageUrl(
+                                          multi.backdropPath.isNotEmpty ? multi.backdropPath : multi.profilePath)),
+                                ],
+                              )),
+                        ],
+                      ),
                     ),
                   ))
               .toList(),
