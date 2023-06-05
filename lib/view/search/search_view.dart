@@ -46,6 +46,7 @@ class SearchView extends StatelessWidget {
           ),
         ),
       ),
+
       body: BlocBuilder<SearchMultiCubit, MultiSearch>(
         bloc: _searchMultiCubit,
         builder: (_, multiSearch) => GridView(
@@ -53,51 +54,61 @@ class SearchView extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 15,
             childAspectRatio: 0.9,
           ),
           controller: _scrollController,
           children: multiSearch.results
-              .map((multi) => Card(
-                    color: Colors.blueGrey[900],
-                    key: Key(multi.id.toString()),
-                    child: GestureDetector(
-                      onTap: () {
-                        Widget view = switch (multi.mediaType) {
-                          "movie" => MovieDetailView(multi.id),
-                          "person" => PersonDetailView(multi.id),
-                          _ => TvShowDetailView(multi.id)
-                        };
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => view));
-                      },
-                      child: Stack(
+              .map(
+                (multi) => Container(
+                  color: Colors.blueGrey[900],
+                  key: Key(multi.id.toString()),
+                  child: GestureDetector(
+                    onTap: () {
+                      Widget view = switch (multi.mediaType) {
+                        "movie" => MovieDetailView(multi.id),
+                        "person" => PersonDetailView(multi.id),
+                        _ => TvShowDetailView(multi.id)
+                      };
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => view));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(_tmdbService
+                              .imageUrl(multi.backdropPath.isNotEmpty ? multi.backdropPath : multi.profilePath)),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Text(
-                              maxLines: 2,
-                              multi.name.isNotEmpty ? multi.name : multi.title,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                color: Colors.amber,
+                          Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(boxShadow: [
+                            BoxShadow(color: Colors.black38)
+                          ]),
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                multi.name.isNotEmpty ? multi.name : multi.title,
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.amber,
+                                ),
                               ),
                             ),
                           ),
-                          AspectRatio(
-                              aspectRatio: 1,
-                              child: Column(
-                                children: [
-                                  Image.network(
-                                      alignment: AlignmentDirectional.bottomStart,
-                                      _tmdbService.imageUrl(
-                                          multi.backdropPath.isNotEmpty ? multi.backdropPath : multi.profilePath)),
-                                ],
-                              )),
                         ],
                       ),
                     ),
-                  ))
+                  ),
+                ),
+              )
               .toList(),
         ),
       ),

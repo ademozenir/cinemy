@@ -1,8 +1,15 @@
 import 'package:cinemy/locator.dart';
-import 'package:cinemy/view/main_view.dart';
+import 'package:cinemy/view/login/auth_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setup();
   runApp(const MyApp());
 }
@@ -18,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: const MainView(),
+      home: const AuthView(),
     );
   }
 }
