@@ -26,7 +26,7 @@ class PersonDetailView extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  color: const Color(0xFF000B49),
+                  color: Colors.blueGrey[900],
                   child: Column(
                     children: [
                       Image.network(

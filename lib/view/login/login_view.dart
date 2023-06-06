@@ -1,4 +1,5 @@
-import 'package:cinemy/view/login/auth_service.dart';
+import 'package:cinemy/bloc/auth_cubit.dart';
+import 'package:cinemy/locator.dart';
 import 'package:cinemy/view/widget/button.dart';
 import 'package:cinemy/view/widget/square_tile.dart';
 import 'package:cinemy/view/widget/textfield.dart';
@@ -92,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                     // google button
                     SquareTile(
                       imagePath: 'assets/icons/google.png',
-                      onTap: () => AuthService().signInWithGoogle(),
+                      onTap: () => getIt.get<AuthCubit>().signInWithGoogle(),
                     ),
                     const SizedBox(width: 25),
                     SquareTile(

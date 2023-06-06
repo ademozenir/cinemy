@@ -1,4 +1,3 @@
-
 import 'package:chewie/chewie.dart';
 import 'package:cinemy/bloc/detail_cubit.dart';
 import 'package:cinemy/locator.dart';
@@ -19,7 +18,7 @@ class VideoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: const Text("Trailers"),
       ),
@@ -30,18 +29,18 @@ class VideoView extends StatelessWidget {
             children: videos
                 .map(
                   (video) => Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Card(
-                  key: Key(video.id),
-                  child: Column(children: [
-                    ListTile(
-                      title: Text(video.name),
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Card(
+                      key: Key(video.id),
+                      child: Column(children: [
+                        ListTile(
+                          title: Text(video.name),
+                        ),
+                        SizedBox(height: 250, child: YoutubeVideo(video.key)),
+                      ]),
                     ),
-                    SizedBox(height: 250, child: YoutubeVideo(video.key)),
-                  ]),
-                ),
-              ),
-            )
+                  ),
+                )
                 .toList(),
           );
         },
@@ -73,6 +72,12 @@ class _YoutubeVideoState extends State<YoutubeVideo> {
     youtubeExplode.videos.streamsClient.getManifest(widget._key).then((manifest) {
       _videoPlayerController = VideoPlayerController.network(manifest.muxed.bestQuality.url.toString());
       _chewieController = ChewieController(
+        materialProgressColors: ChewieProgressColors(
+            backgroundColor: Colors.white70,
+            bufferedColor: Colors.white10,
+            playedColor: Colors.amber,
+            handleColor: Colors.amber),
+        allowFullScreen: true,
         aspectRatio: 16 / 9,
         videoPlayerController: _videoPlayerController,
       );
@@ -92,7 +97,7 @@ class _YoutubeVideoState extends State<YoutubeVideo> {
     return _chewieController == null
         ? const Text("video loading")
         : Chewie(
-      controller: _chewieController!,
-    );
+            controller: _chewieController!,
+          );
   }
 }

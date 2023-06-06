@@ -1,5 +1,6 @@
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/view/login/auth_view.dart';
+import 'package:cinemy/view/widget/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: primaryBlack,
       ),
       home: const AuthView(),
     );

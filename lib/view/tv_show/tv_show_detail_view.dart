@@ -22,6 +22,7 @@ class TvShowDetailView extends StatelessWidget {
       bloc: getIt.get<TvShowDetailCubit>(),
       builder: (_, tvShow) {
         return Scaffold(
+                 backgroundColor: Colors.blueGrey[900],
           appBar: AppBar(
             title: Text(tvShow.name),
           ),
@@ -29,13 +30,11 @@ class TvShowDetailView extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  color: const Color(0xFF000B49),
+                  color: Colors.blueGrey[900],
                   child: Column(
                     children: [
                       Image.network(
-                        _tmdbService.imageUrl(tvShow.posterPath),
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.7,
+                        _tmdbService.imageUrl(tvShow.backdropPath),
                         fit: BoxFit.cover,
                       ),
                       TvShowInfo(tvShow),
@@ -97,7 +96,7 @@ class TvShowInfo extends StatelessWidget {
               tvShow.overview,
               style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 60),
             Positioned(
               bottom: 10,
               width: MediaQuery.of(context).size.width,

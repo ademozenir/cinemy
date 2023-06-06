@@ -21,6 +21,7 @@ class MovieDetailView extends StatelessWidget {
       bloc: getIt.get<MovieDetailCubit>(),
       builder: (_, movie) {
         return Scaffold(
+          backgroundColor: Colors.blueGrey[900],
           appBar: AppBar(
             title: Text(movie.title),
           ),
@@ -28,13 +29,11 @@ class MovieDetailView extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  color: const Color(0xFF000B49),
+                  color: Colors.blueGrey[900],
                   child: Column(
                     children: [
                       Image.network(
-                        _tmdbService.imageUrl(movie.posterPath),
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.7,
+                        _tmdbService.imageUrl(movie.backdropPath),
                         fit: BoxFit.cover,
                       ),
                       MovieInfo(movie),
@@ -58,7 +57,7 @@ class MovieInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 10,
+      bottom: 15,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.all(20.0),
@@ -68,7 +67,7 @@ class MovieInfo extends StatelessWidget {
               movie.title,
               style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
             Text(
               "${movie.releaseDate} | ${movie.genres.fold("", (previousValue, genre) => "$previousValue ${genre.name}")} | ${movie.runtime}",
               style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
@@ -96,7 +95,7 @@ class MovieInfo extends StatelessWidget {
               movie.overview,
               style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 60),
             Positioned(
               bottom: 10,
               width: MediaQuery.of(context).size.width,
