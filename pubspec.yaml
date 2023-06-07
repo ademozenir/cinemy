@@ -35,6 +35,8 @@ dependencies:
   get_it:
   chewie:
   video_player:
+  video_thumbnail:
+  path_provider:
   youtube_explode_dart:
   firebase_core:
   firebase_auth:

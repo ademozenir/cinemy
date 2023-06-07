@@ -26,26 +26,30 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(icon: const Icon(Icons.close), onPressed: () => _textController.clear()),
-        ],
-        title: SizedBox(
-          width: 310,
-          height: 60,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-            child: TextField(
-              controller: _textController,
-              onChanged: _searchMultiCubit.searh,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+          backgroundColor: Colors.grey[300],
+          title: SizedBox(
+            width: 310,
+            height: 50,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5,bottom: 5),
+              child: TextField(
+                controller: _textController,
+                onChanged: _searchMultiCubit.searh,
+                decoration: InputDecoration(
+                  isCollapsed: false,
+                  fillColor: Colors.white70,filled: true,
+                  border: OutlineInputBorder(borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => _textController.clear(),
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),
 
       body: BlocBuilder<SearchMultiCubit, MultiSearch>(
         bloc: _searchMultiCubit,
@@ -87,9 +91,7 @@ class SearchView extends StatelessWidget {
                         children: [
                           Container(
                             width: double.infinity,
-                            decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(color: Colors.black38)
-                          ]),
+                            decoration: const BoxDecoration(boxShadow: [BoxShadow(color: Colors.black54)]),
                             child: Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Text(
@@ -98,7 +100,7 @@ class SearchView extends StatelessWidget {
                                 multi.name.isNotEmpty ? multi.name : multi.title,
                                 style: const TextStyle(
                                   fontSize: 11,
-                                  color: Colors.amber,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),

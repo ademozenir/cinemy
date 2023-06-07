@@ -34,7 +34,7 @@ class TvShowDetailView extends StatelessWidget {
                   child: Column(
                     children: [
                       Image.network(
-                        _tmdbService.imageUrl(tvShow.backdropPath),
+                        _tmdbService.imageUrl(tvShow.posterPath),
                         fit: BoxFit.cover,
                       ),
                       TvShowInfo(tvShow),

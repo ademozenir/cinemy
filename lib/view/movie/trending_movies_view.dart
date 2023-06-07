@@ -70,7 +70,7 @@ class TrendingMoviesWidget extends StatelessWidget {
                       subtitle: Text(movie.releaseDate),
                       title: Text(movie.title),
                     ),
-                    Image.network(_tmdbService.imageUrl(movie.posterPath))
+                    Image.network(_tmdbService.imageUrl(movie.backdropPath))
                   ],
                 ),
               ),

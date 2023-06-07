@@ -54,26 +54,51 @@ class TrendingPeopleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return GridView(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 15,
+        childAspectRatio: 0.9,
+      ),
       controller: _scrollController,
       children: peopleState.people
-          .map((people) => Card(
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PersonDetailView(people.id)),
+          .map(
+            (people) => GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PersonDetailView(people.id)),
+              ),
+              child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: NetworkImage(_tmdbService.imageUrl(people.profilePath))),
                   ),
                   child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(people.name),
-                        subtitle: Text(people.knownForDepartment),
-                      ),
-                      Image.network(_tmdbService.imageUrl(people.profilePath))
-                    ],
-                  ),
-                ),
-              ))
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(boxShadow: [BoxShadow(color: Colors.black87)]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              people.name,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ])),
+            ),
+          )
           .toList(),
     );
   }

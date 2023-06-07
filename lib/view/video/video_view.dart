@@ -5,6 +5,7 @@ import 'package:cinemy/tmdb/model/movie_video.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
 class VideoView extends StatelessWidget {

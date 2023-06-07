@@ -2,6 +2,7 @@ import 'package:cinemy/bloc/detail_cubit.dart';
 import 'package:cinemy/locator.dart';
 import 'package:cinemy/tmdb/model/movie.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
+import 'package:cinemy/view/comment.dart';
 import 'package:cinemy/view/video/video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +34,7 @@ class MovieDetailView extends StatelessWidget {
                   child: Column(
                     children: [
                       Image.network(
-                        _tmdbService.imageUrl(movie.backdropPath),
+                        _tmdbService.imageUrl(movie.posterPath),
                         fit: BoxFit.cover,
                       ),
                       MovieInfo(movie),
@@ -110,7 +111,10 @@ class MovieInfo extends StatelessWidget {
                           backgroundColor: Colors.pink[900],
                           fixedSize: Size(MediaQuery.of(context).size.width * 0.400, 60),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(builder: (context) => const CommentView()));
+                      },
                       child: RichText(
                         text: TextSpan(
                             style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),

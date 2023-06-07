@@ -70,7 +70,7 @@ class TrendingTvShowWidget extends StatelessWidget {
                         title: Text(tvShow.name),
                         subtitle: Text(tvShow.firstAirDate),
                       ),
-                      Image.network(_tmdbService.imageUrl(tvShow.posterPath))
+                      Image.network(_tmdbService.imageUrl(tvShow.backdropPath))
                     ],
                   ),
                 ),
