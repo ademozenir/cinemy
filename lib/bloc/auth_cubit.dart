@@ -13,11 +13,11 @@ class AuthCubit extends Cubit<u.User> {
     });
   }
 
-  var googleSignIn = getIt.get<GoogleSignIn>();
+  final _googleSignIn = getIt.get<GoogleSignIn>();
 
   void signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
@@ -30,15 +30,10 @@ class AuthCubit extends Cubit<u.User> {
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
-
-    if (googleUser != null) {
-      var user = u.User(googleUser.id, googleUser.displayName ?? "", googleUser.email, googleUser.photoUrl ?? "");
-      emit(user);
-    }
   }
 
   void signOut() {
-    googleSignIn.signOut();
+    _googleSignIn.signOut();
     FirebaseAuth.instance.signOut();
 
     emit(u.User.empty());

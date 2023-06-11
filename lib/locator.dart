@@ -1,4 +1,5 @@
 import 'package:cinemy/bloc/auth_cubit.dart';
+import 'package:cinemy/bloc/comment_cubit.dart';
 import 'package:cinemy/bloc/detail_cubit.dart';
 import 'package:cinemy/bloc/search_cubit.dart';
 import 'package:cinemy/tmdb/tmdb_service.dart';
@@ -35,4 +36,6 @@ void setup() {
   getIt.registerLazySingleton<TvShowVideoCubit>(() => TvShowVideoCubit());
 
   getIt.registerLazySingleton<SearchMultiCubit>(() => SearchMultiCubit());
+
+  getIt.registerLazySingleton<CommentCubit>(() => CommentCubit());
 }
