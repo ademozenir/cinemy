@@ -18,7 +18,7 @@ class VideoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: const Text("Trailers"),
       ),
@@ -33,10 +33,10 @@ class VideoView extends StatelessWidget {
                     child: Card(
                       key: Key(video.id),
                       child: Column(children: [
+                        SizedBox(height: 250, child: YoutubeVideo(video.key)),
                         ListTile(
                           title: Text(video.name),
                         ),
-                        SizedBox(height: 250, child: YoutubeVideo(video.key)),
                       ]),
                     ),
                   ),
@@ -61,43 +61,69 @@ class YoutubeVideo extends StatefulWidget {
 class _YoutubeVideoState extends State<YoutubeVideo> {
   _YoutubeVideoState();
 
-  late VideoPlayerController _videoPlayerController;
+  VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
+  String? _thumbnailUrl;
+  bool _isPlaying = false;
 
   @override
   void initState() {
     super.initState();
+    _loadVideo();
+  }
 
+  Future<void> _loadVideo() async {
     var youtubeExplode = getIt.get<yt.YoutubeExplode>();
-    youtubeExplode.videos.streamsClient.getManifest(widget._key).then((manifest) {
-      _videoPlayerController = VideoPlayerController.network(manifest.muxed.bestQuality.url.toString());
-      _chewieController = ChewieController(
-        materialProgressColors: ChewieProgressColors(
-            backgroundColor: Colors.white70,
-            bufferedColor: Colors.white10,
-            playedColor: Colors.amber,
-            handleColor: Colors.amber),
-        allowFullScreen: true,
-        aspectRatio: 16 / 9,
-        videoPlayerController: _videoPlayerController,
-      );
-      setState(() {});
-    });
+    var video = await youtubeExplode.videos.get(widget._key);
+    _thumbnailUrl = video.thumbnails.standardResUrl;
+
+    var manifest = await youtubeExplode.videos.streamsClient.getManifest(widget._key);
+    var videoUrl = manifest.muxed.bestQuality.url.toString();
+
+    _videoPlayerController = VideoPlayerController.network(videoUrl);
+    _chewieController = ChewieController(
+      autoInitialize: true,
+      materialProgressColors: ChewieProgressColors(
+          backgroundColor: Colors.white70,
+          bufferedColor: Colors.white10,
+          playedColor: Colors.amber,
+          handleColor: Colors.amber),
+      allowFullScreen: true,
+      aspectRatio: 16 / 9,
+      videoPlayerController: _videoPlayerController!,
+    );
+    setState(() {});
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _videoPlayerController?.dispose();
     _chewieController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _chewieController == null
-        ? const Text("video loading")
-        : Chewie(
-            controller: _chewieController!,
-          );
+    if (_thumbnailUrl == null) {
+      return const Text("video loading");
+    }
+    if (!_isPlaying) {
+      return GestureDetector(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(_thumbnailUrl!),
+            ),
+          ),
+        ),
+        onTap: () {
+          _isPlaying = true;
+          _chewieController!.play();
+          setState(() {});
+        },
+      );
+    }
+    return Chewie(controller: _chewieController!);
   }
 }

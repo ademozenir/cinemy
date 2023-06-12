@@ -17,7 +17,6 @@ class CommentCubit extends Cubit<List<Comment>> {
     emit([]);
     _subscription = _db.collection("comment")
         .where("topicId", isEqualTo: topicId)
-        .orderBy("dateTime")
         .snapshots()
         .map((querySnapshot) => querySnapshot.docChanges)
         .listen((docChanges) {
