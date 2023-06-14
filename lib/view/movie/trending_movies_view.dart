@@ -23,6 +23,7 @@ class TrendingMoviesViewState extends State<TrendingMoviesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: MainSearchBar("Trending Movies"),
       body: Container(
         decoration: const BoxDecoration(

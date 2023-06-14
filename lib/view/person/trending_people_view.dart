@@ -23,6 +23,7 @@ class TrendingPeopleViewState extends State<TrendingPeopleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: MainSearchBar('Trending People'),
       body: Container(
         decoration: const BoxDecoration(

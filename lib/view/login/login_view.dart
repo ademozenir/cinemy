@@ -4,7 +4,6 @@ import 'package:cinemy/view/widget/button.dart';
 import 'package:cinemy/view/widget/square_tile.dart';
 import 'package:cinemy/view/widget/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({super.key});
@@ -39,15 +38,14 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 35),
-                SvgPicture.asset(width: 120, height: 120, "assets/images/tmdb.svg"),
-                const SizedBox(height: 40),
+                const SizedBox(height: 15),
+                Image.asset(width: 280, height: 160, "assets/images/logo.png"),
                 Text('Welcome back you\'ve been missed!', style: TextStyle(color: Colors.grey[700], fontSize: 16)),
                 const SizedBox(height: 25),
                 CreateTextField(controller: usernameController, hintText: 'Username', obscureText: false),
                 const SizedBox(height: 15),
                 CreateTextField(controller: passwordController, hintText: 'Password', obscureText: true),
-                const SizedBox(height: 15),
+                const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -55,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                     children: [Text('Forgot Password?', style: TextStyle(color: Colors.grey[600]))],
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
                 CreateButton(
                   onTap: signUserIn,
                 ),

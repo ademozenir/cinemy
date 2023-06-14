@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AppInfoView extends StatelessWidget {
   const AppInfoView({super.key});
@@ -7,6 +6,7 @@ class AppInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("App Information"),
       ),
@@ -14,13 +14,15 @@ class AppInfoView extends StatelessWidget {
         // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0,bottom: 10),
-            child: SvgPicture.asset(width: 120, height: 120, "assets/images/tmdb.svg"),
-          ),
+          SizedBox(height: 20),
+          Image.asset(width: 280, height: 150, "assets/images/logo.2.png"),
+          // child: SvgPicture.asset(width: 120, height: 120, "assets/images/tmdb.svg"),
           const Padding(
-            padding: EdgeInsets.only(top: 40,bottom: 10),
-            child: Text("ABOUT CINEMY MOVIE APP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            child: Text(
+              "ABOUT CINEMY MOVIE APP",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.only(left: 30.0, right: 25),

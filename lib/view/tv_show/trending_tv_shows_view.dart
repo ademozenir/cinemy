@@ -24,6 +24,7 @@ class TrendingTvShowsViewState extends State<TrendingTvShowsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: MainSearchBar('Trending Tv Shows'),
       body: Container(
         decoration: const BoxDecoration(
