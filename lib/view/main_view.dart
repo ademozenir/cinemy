@@ -27,6 +27,7 @@ class MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: pages[currentIndex],
@@ -38,11 +39,11 @@ class MainViewState extends State<MainView> {
           showUnselectedLabels: true,
           elevation: 0,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           onTap: onTap,
           currentIndex: currentIndex,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey.withOpacity(0.9),
+          selectedItemColor: Colors.blueGrey,
+          unselectedItemColor: Colors.white.withOpacity(0.9),
           items: const [
             BottomNavigationBarItem(label: "Movies", icon: Icon(Icons.movie)),
             BottomNavigationBarItem(label: "Tv Shows", icon: Icon(Icons.live_tv_outlined)),

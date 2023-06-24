@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "499732601454",
-    "project_id": "cinemy-47f35",
-    "storage_bucket": "cinemy-47f35.appspot.com"
+    "project_number": "279409467810",
+    "project_id": "cinemy-da7ae",
+    "storage_bucket": "cinemy-da7ae.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:499732601454:android:614da1be8c76e9d188a47f",
+        "mobilesdk_app_id": "1:279409467810:android:ab2c3bdddc83111c8d92fb",
         "android_client_info": {
           "package_name": "com.cinemy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "499732601454-848clsc5i0og5q9l2eqktjuoj9ukhdvf.apps.googleusercontent.com",
+          "client_id": "279409467810-aolqe0m2pqdgke7j6l9dm30ppkkd3hb5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc2knp7EJamjwiOCBmjGNhJzVXmzdV9dw"
+          "current_key": "AIzaSyAlaNo9-SZ6ktG6XZxUnFsgY_Iu93oxLkw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "499732601454-848clsc5i0og5q9l2eqktjuoj9ukhdvf.apps.googleusercontent.com",
+              "client_id": "279409467810-aolqe0m2pqdgke7j6l9dm30ppkkd3hb5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "279409467810-1fmgtd1pcd65k2k33g6vr78tiqqlansq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cinemy"
+              }
             }
           ]
         }

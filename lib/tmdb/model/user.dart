@@ -1,4 +1,5 @@
 
+
 class User {
   User(this.id, this.name, this.email, this.photoUrl);
 
